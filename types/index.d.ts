@@ -1,9 +1,9 @@
-export * from './lib/client'
-export * from './lib/connect'
-export * from './lib/store'
-export * from './lib/client-options'
-import { MqttClient } from './lib/client'
-export { MqttClient as Client }
+export * from './lib/client';
+export * from './lib/connect';
+export * from './lib/store';
+export * from './lib/client-options';
+import { MqttClient } from './lib/client';
+export { MqttClient as Client };
 export {
   QoS,
   PacketCmd,
@@ -24,7 +24,7 @@ export {
   IPingrespPacket,
   IDisconnectPacket,
   Packet,
-  UserProperties
-} from 'mqtt-packet'
-export { IMessageIdProvider } from './lib/message-id-provider'
-export { UniqueMessageIdProvider } from './lib/unique-message-id-provider'
+  UserProperties,
+} from 'mqtt-packet';
+export { IMessageIdProvider } from './lib/message-id-provider';
+export { UniqueMessageIdProvider } from './lib/unique-message-id-provider';

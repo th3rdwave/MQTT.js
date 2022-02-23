@@ -1,8 +1,6 @@
-'use strict'
-
-const net = require('net')
-const tls = require('tls')
-const Connection = require('mqtt-connection')
+const net = require('net');
+const tls = require('tls');
+const Connection = require('mqtt-connection');
 
 /**
  * MqttServer
@@ -10,20 +8,20 @@ const Connection = require('mqtt-connection')
  * @param {Function} listener - fired on client connection
  */
 class MqttServer extends net.Server {
-  constructor (listener) {
-    super()
-    this.connectionList = []
+  constructor(listener) {
+    super();
+    this.connectionList = [];
 
-    const that = this
+    const that = this;
     this.on('connection', function (duplex) {
-      this.connectionList.push(duplex)
+      this.connectionList.push(duplex);
       const connection = new Connection(duplex, function () {
-        that.emit('client', connection)
-      })
-    })
+        that.emit('client', connection);
+      });
+    });
 
     if (listener) {
-      this.on('client', listener)
+      this.on('client', listener);
     }
   }
 }
@@ -34,19 +32,19 @@ class MqttServer extends net.Server {
  * @param {Function} listener - fired on client connection
  */
 class MqttServerNoWait extends net.Server {
-  constructor (listener) {
-    super()
-    this.connectionList = []
+  constructor(listener) {
+    super();
+    this.connectionList = [];
 
     this.on('connection', function (duplex) {
-      this.connectionList.push(duplex)
-      const connection = new Connection(duplex)
+      this.connectionList.push(duplex);
+      const connection = new Connection(duplex);
       // do not wait for connection to return to send it to the client.
-      this.emit('client', connection)
-    })
+      this.emit('client', connection);
+    });
 
     if (listener) {
-      this.on('client', listener)
+      this.on('client', listener);
     }
   }
 }
@@ -58,37 +56,37 @@ class MqttServerNoWait extends net.Server {
  * @param {Function} listener
  */
 class MqttSecureServer extends tls.Server {
-  constructor (opts, listener) {
+  constructor(opts, listener) {
     if (typeof opts === 'function') {
-      listener = opts
-      opts = {}
+      listener = opts;
+      opts = {};
     }
 
     // sets a listener for the 'connection' event
-    super(opts)
-    this.connectionList = []
+    super(opts);
+    this.connectionList = [];
 
     this.on('secureConnection', function (socket) {
-      this.connectionList.push(socket)
-      const that = this
+      this.connectionList.push(socket);
+      const that = this;
       const connection = new Connection(socket, function () {
-        that.emit('client', connection)
-      })
-    })
+        that.emit('client', connection);
+      });
+    });
 
     if (listener) {
-      this.on('client', listener)
+      this.on('client', listener);
     }
   }
 
-  setupConnection (duplex) {
-    const that = this
+  setupConnection(duplex) {
+    const that = this;
     const connection = new Connection(duplex, function () {
-      that.emit('client', connection)
-    })
+      that.emit('client', connection);
+    });
   }
 }
 
-exports.MqttServer = MqttServer
-exports.MqttServerNoWait = MqttServerNoWait
-exports.MqttSecureServer = MqttSecureServer
+exports.MqttServer = MqttServer;
+exports.MqttServerNoWait = MqttServerNoWait;
+exports.MqttSecureServer = MqttSecureServer;

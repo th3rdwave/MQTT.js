@@ -1,5 +1,3 @@
-'use strict'
-
 /** ************************** IMPORTANT NOTE ***********************************
 
   The certificate used on this example has been generated for a host named stark.
@@ -14,15 +12,15 @@
   <the ip address of the server> stark
  *******************************************************************************/
 
-const mqtt = require('mqtt')
-const fs = require('fs')
-const path = require('path')
-const KEY = fs.readFileSync(path.join(__dirname, '/tls-key.pem'))
-const CERT = fs.readFileSync(path.join(__dirname, '/tls-cert.pem'))
-const TRUSTED_CA_LIST = fs.readFileSync(path.join(__dirname, '/crt.ca.cg.pem'))
+const mqtt = require('mqtt');
+const fs = require('fs');
+const path = require('path');
+const KEY = fs.readFileSync(path.join(__dirname, '/tls-key.pem'));
+const CERT = fs.readFileSync(path.join(__dirname, '/tls-cert.pem'));
+const TRUSTED_CA_LIST = fs.readFileSync(path.join(__dirname, '/crt.ca.cg.pem'));
 
-const PORT = 1883
-const HOST = 'stark'
+const PORT = 1883;
+const HOST = 'stark';
 
 const options = {
   port: PORT,
@@ -32,17 +30,17 @@ const options = {
   rejectUnauthorized: true,
   // The CA list will be used to determine if server is authorized
   ca: TRUSTED_CA_LIST,
-  protocol: 'mqtts'
-}
+  protocol: 'mqtts',
+};
 
-const client = mqtt.connect(options)
+const client = mqtt.connect(options);
 
-client.subscribe('messages')
-client.publish('messages', 'Current time is: ' + new Date())
+client.subscribe('messages');
+client.publish('messages', 'Current time is: ' + new Date());
 client.on('message', function (topic, message) {
-  console.log(message)
-})
+  console.log(message);
+});
 
 client.on('connect', function () {
-  console.log('Connected')
-})
+  console.log('Connected');
+});

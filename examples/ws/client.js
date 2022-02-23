@@ -1,8 +1,6 @@
-'use strict'
+const mqtt = require('../../');
 
-const mqtt = require('../../')
-
-const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
+const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
 
 // This sample should be run in tandem with the aedes_server.js file.
 // Simply run it:
@@ -11,7 +9,7 @@ const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
 // Then run this file in a separate console:
 // $ node websocket_sample.js
 //
-const host = 'ws://localhost:8080'
+const host = 'ws://localhost:8080';
 
 const options = {
   keepalive: 30,
@@ -25,29 +23,34 @@ const options = {
     topic: 'WillMsg',
     payload: 'Connection Closed abnormally..!',
     qos: 0,
-    retain: false
+    retain: false,
   },
-  rejectUnauthorized: false
-}
+  rejectUnauthorized: false,
+};
 
-console.log('connecting mqtt client')
-const client = mqtt.connect(host, options)
+console.log('connecting mqtt client');
+const client = mqtt.connect(host, options);
 
 client.on('error', function (err) {
-  console.log(err)
-  client.end()
-})
+  console.log(err);
+  client.end();
+});
 
 client.on('connect', function () {
-  console.log('client connected:' + clientId)
-  client.subscribe('topic', { qos: 0 })
-  client.publish('topic', 'wss secure connection demo...!', { qos: 0, retain: false })
-})
+  console.log('client connected:' + clientId);
+  client.subscribe('topic', { qos: 0 });
+  client.publish('topic', 'wss secure connection demo...!', {
+    qos: 0,
+    retain: false,
+  });
+});
 
 client.on('message', function (topic, message, packet) {
-  console.log('Received Message:= ' + message.toString() + '\nOn topic:= ' + topic)
-})
+  console.log(
+    'Received Message:= ' + message.toString() + '\nOn topic:= ' + topic,
+  );
+});
 
 client.on('close', function () {
-  console.log(clientId + ' disconnected')
-})
+  console.log(clientId + ' disconnected');
+});
