@@ -1,7 +1,7 @@
 {
-  "name": "mqtt",
+  "name": "@th3rdwave/mqtt",
   "description": "A library for the MQTT protocol",
-  "version": "4.3.6",
+  "version": "1.0.0",
   "contributors": [
     "Adam Rudd <adamvrr@gmail.com>",
     "Matteo Collina <matteo.collina@gmail.com> (https://github.com/mcollina)",
